@@ -1,0 +1,184 @@
+.tasks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* reset actions style */
+.ant-picker-calendar-month-select {
+  order: -1 !important;
+  margin-inline-end: 8px !important;
+}
+
+.ant-picker-calendar-mode-switch {
+  display: none !important;
+}
+
+.ant-picker-calendar.ant-picker-calendar-full .ant-picker-panel .ant-picker-body td {
+  padding-bottom: 5px !important;
+}
+
+.ant-picker-cell:hover .ant-picker-calendar-date,
+.ant-picker-cell-selected .ant-picker-calendar-date {
+  background: transparent !important;
+}
+
+.ant-picker-calendar-date-today {
+  border-color: rgba(5, 5, 5, 0.06) !important;
+}
+
+.ant-picker-cell {
+  cursor: default !important;
+}
+
+.ant-picker-cell-selected .ant-picker-calendar-date-value {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+
+.ant-picker-calendar-date-value {
+  font-size: 16px !important;
+}
+
+/* task custom style */
+.tasks .task {
+  font-size: 16px;
+  text-align: center;
+  background-color: rgb(22, 119, 255, .2);
+  border-top: 1px solid rgb(22, 119, 255, .4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.tasks--past-month .task {
+  background-color: rgba(217, 217, 217, 0.5);
+  border-top: rgba(5, 5, 5, 0.06)
+}
+
+.task:hover:before {
+  content: attr(data-title);
+  font-size: 14px;
+}
+
+/* filled task style  */
+.tasks .task:not(.task-6)+.task {
+  z-index: 5;
+}
+
+.task {
+  --maxWorkingHoursPerDay: 7;
+}
+
+.tasks .task-1 {
+  top: calc(100% - (100% * 1 / var(--maxWorkingHoursPerDay)));
+  bottom: 0;
+}
+
+.tasks .task:not(.task-6)+.task-1 {
+  bottom: calc(100% - (100% * 1 / var(--maxWorkingHoursPerDay)));
+  top: 0;
+}
+
+.tasks .task-1_5 {
+  top: calc(100% - (100% * 1.5 / var(--maxWorkingHoursPerDay)));
+  bottom: 0;
+}
+
+.tasks .task:not(.task-6)+.task-1_5 {
+  bottom: calc(100% - (100% * 1.5 / var(--maxWorkingHoursPerDay)));
+  top: 0;
+}
+
+.tasks .task-2 {
+  top: calc(100% - (100% * 2 / var(--maxWorkingHoursPerDay)));
+  bottom: 0;
+}
+
+.tasks .task:not(.task-6)+.task-2 {
+  bottom: calc(100% - (100% * 2 / var(--maxWorkingHoursPerDay)));
+  top: 0;
+}
+
+.tasks .task-2_5 {
+  top: calc(100% - (100% * 2.5 / var(--maxWorkingHoursPerDay)));
+  bottom: 0;
+}
+
+.tasks .task:not(.task-6)+.task-2_5 {
+  bottom: calc(100% - (100% * 2.5 / var(--maxWorkingHoursPerDay)));
+  top: 0;
+}
+
+.tasks .task-3 {
+  top: calc(100% - (100% * 3 / var(--maxWorkingHoursPerDay)));
+  bottom: 0;
+}
+
+.tasks .task:not(.task-6)+.task-3 {
+  bottom: calc(100% - (100% * 3 / var(--maxWorkingHoursPerDay)));
+  top: 0;
+}
+
+.tasks .task-3_5 {
+  top: calc(100% - (100% * 3.5 / var(--maxWorkingHoursPerDay)));
+  bottom: 0;
+}
+
+.tasks .task:not(.task-6)+.task-3_5 {
+  bottom: calc(100% - (100% * 3.5 / var(--maxWorkingHoursPerDay)));
+  top: 0;
+}
+
+.tasks .task-4 {
+  top: calc(100% - (100% * 4 / var(--maxWorkingHoursPerDay)));
+  bottom: 0;
+}
+
+.tasks .task:not(.task-6)+.task-4 {
+  bottom: calc(100% - (100% * 4 / var(--maxWorkingHoursPerDay)));
+  top: 0;
+}
+
+.tasks .task-4_5 {
+  top: calc(100% - (100% * 4.5 / var(--maxWorkingHoursPerDay)));
+  bottom: 0;
+}
+
+.tasks .task:not(.task-6)+.task-4_5 {
+  bottom: calc(100% - (100% * 4.5 / var(--maxWorkingHoursPerDay)));
+  top: 0;
+}
+
+.tasks .task-5 {
+  top: calc(100% - (100% * 5 / var(--maxWorkingHoursPerDay)));
+  bottom: 0;
+}
+
+.tasks .task:not(.task-6)+.task-5 {
+  bottom: calc(100% - (100% * 5 / var(--maxWorkingHoursPerDay)));
+  top: 0;
+}
+
+.tasks .task-5_5 {
+  top: calc(100% - (100% * 5.5 / var(--maxWorkingHoursPerDay)));
+  bottom: 0;
+}
+
+.tasks .task:not(.task-6)+.task-5_5 {
+  bottom: calc(100% - (100% * 5.5 / var(--maxWorkingHoursPerDay)));
+  top: 0;
+}
+
+.tasks .task-6 {
+  top: calc(100% - (100% * 6 / var(--maxWorkingHoursPerDay)));
+  bottom: 0;
+}
+
+.tasks .task:not(.task-6)+.task-6 {
+  bottom: calc(100% - (100% * 6 / var(--maxWorkingHoursPerDay)));
+  top: 0;
+}

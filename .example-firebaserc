@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "project-full-name"
+  },
+  "targets": {
+    "project-full-name": {
+      "hosting": {
+        "project-name": [
+          "project-full-name"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
