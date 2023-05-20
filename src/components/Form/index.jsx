@@ -1,22 +1,47 @@
 import "./css/style.css";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 import { Row, Col, Input, InputNumber, DatePicker, Button, Drawer } from "antd";
+import dayjs from "dayjs";
 
 function Form() {
   const [collectionDate, setCollectionDate] = useState("");
   const [taskDate, setTaskDate] = useState("");
+  const [inputDate, setInputDate] = useState("");
   const [taskHours, setTaskHours] = useState(0);
-  const [openDrawer, setOpenDrawer] = useState(false);
   const [taskProject, setTaskProject] = useState("");
-  const [inputHours, setInputHours] = useState(0);
   const [taskSecret, setTaskSecret] = useState("");
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   const user = "dk";
+
+  /** handle the case when user has filled a form on another resource */
+  useEffect(() => {
+    if (window.location.search.length > 0) {
+      /* get params from url */
+      const params = new URLSearchParams(window.location.search);
+      for (const [key, value] of params.entries()) {
+        switch (key) {
+          case "project":
+            setTaskProject(value);
+            break;
+          case "date":
+            setDates(dayjs(value));
+            break;
+          case "hour":
+            setHours(Number(value));
+            break;
+          default:
+            break;
+        }
+      }
+      setOpenDrawer(true);
+    }
+  }, []);
 
   const addTask = async (e) => {
     e.preventDefault();
@@ -63,7 +88,6 @@ function Form() {
      * value @type Number
      */
     let hours = Math.ceil(value * 2) / 2;
-    setInputHours(hours);
     setTaskHours(hours);
   };
 
@@ -71,6 +95,7 @@ function Form() {
     /**
      * format() return @type String
      */
+    setInputDate(e);
     setTaskDate(e.format("D"));
     setCollectionDate(e.format("YYYY-M"));
   };
@@ -102,6 +127,7 @@ function Form() {
             <Input
               placeholder="Project *"
               style={{ width: "95%" }}
+              value={taskProject}
               onChange={(e) => setTaskProject(e.target.value)}
             />
           </Col>
@@ -113,7 +139,7 @@ function Form() {
               max={200}
               step={0.5}
               precision={1}
-              value={inputHours}
+              value={taskHours}
               onChange={setHours}
             />
           </Col>
@@ -122,6 +148,7 @@ function Form() {
               placeholder="Date *"
               format="DD-MM-YYYY"
               style={{ width: "95%" }}
+              value={inputDate}
               onChange={setDates}
             />
           </Col>
@@ -129,6 +156,7 @@ function Form() {
             <Input
               placeholder="Secret *"
               style={{ width: "95%" }}
+              value={taskSecret}
               onChange={(e) => setTaskSecret(e.target.value)}
             />
           </Col>

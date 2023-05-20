@@ -10,7 +10,7 @@ Visualization of current tasks with Ant design (antd, ant.design) calendar, Vite
 
 ### Deploy hosting/database/storage changes to existing firebase project
 
-- https://firebase.google.com/docs/hosting/test-preview-deploy
+- https://firebase.google.com/docs/hosting/test-preview-deploy (firebase deploy --only hosting)
 
 ###### by TARGET_NAME
 
