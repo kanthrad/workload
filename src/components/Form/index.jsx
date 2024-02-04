@@ -16,8 +16,7 @@ function Form() {
   const [taskProject, setTaskProject] = useState("");
   const [taskSecret, setTaskSecret] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
-
-  const user = "dk";
+  const [taskUserid, setTaskUserid] = useState("");
 
   /** handle the case when user has filled a form on another resource */
   useEffect(() => {
@@ -35,6 +34,9 @@ function Form() {
           case "hour":
             setHours(Number(value));
             break;
+          case "userid":
+            setTaskUserid(value);
+            break;
           default:
             break;
         }
@@ -45,7 +47,7 @@ function Form() {
 
   const addTask = async (e) => {
     e.preventDefault();
-    if (taskDate && taskHours && taskProject && taskSecret) {
+    if (taskDate && taskHours && taskProject && taskSecret && taskUserid) {
       /**
        * prepare and add values to database
        * taskProject @type String
@@ -60,7 +62,7 @@ function Form() {
         await setDoc(
           doc(
             db,
-            "tasks-" + user + "-" + collectionDate,
+            "tasks-" + taskUserid + "-" + collectionDate,
             project + "-" + taskHours
           ),
           {
@@ -68,6 +70,7 @@ function Form() {
             date: date,
             hours: taskHours,
             secret: taskSecret,
+            userid: taskUserid,
           }
         );
         console.log("Document written");
@@ -123,16 +126,18 @@ function Form() {
         onClose={onClose}
       >
         <Row justify="center" align="middle" className="form">
-          <Col span={3}>
+          <Col span={4}>
             <Input
+              addonBefore="Project"
               placeholder="Project *"
               style={{ width: "95%" }}
               value={taskProject}
               onChange={(e) => setTaskProject(e.target.value)}
             />
           </Col>
-          <Col span={3}>
+          <Col span={4}>
             <InputNumber
+              addonBefore="Hours"
               placeholder="Hours *"
               style={{ width: "95%" }}
               min={0}
@@ -143,7 +148,7 @@ function Form() {
               onChange={setHours}
             />
           </Col>
-          <Col span={3}>
+          <Col span={4}>
             <DatePicker
               placeholder="Date *"
               format="DD-MM-YYYY"
@@ -152,15 +157,25 @@ function Form() {
               onChange={setDates}
             />
           </Col>
-          <Col span={3}>
+          <Col span={4}>
             <Input
+              addonBefore="User"
+              placeholder="User id *"
+              style={{ width: "95%" }}
+              value={taskUserid}
+              onChange={(e) => setTaskUserid(e.target.value)}
+            />
+          </Col>
+          <Col span={4}>
+            <Input.Password
               placeholder="Secret *"
               style={{ width: "95%" }}
               value={taskSecret}
               onChange={(e) => setTaskSecret(e.target.value)}
+              visibilityToggle={{ visible: false }}
             />
           </Col>
-          <Col span={3}>
+          <Col span={4}>
             <Button style={{ width: "95%" }} onClick={addTask}>
               Submit
             </Button>

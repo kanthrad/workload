@@ -182,3 +182,17 @@
   bottom: calc(100% - (100% * 6 / var(--maxWorkingHoursPerDay)));
   top: 0;
 }
+
+.taskuserid {
+  pointer-events: none;
+  position: absolute;
+  top: 12px;
+  left: 0px;
+  text-align: center;
+  right: 0px;
+  width: 100%;
+}
+
+.taskuserid .ant-select {
+  pointer-events: all;
+}

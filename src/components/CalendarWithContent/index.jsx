@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../firebase';
 
-import { Calendar } from 'antd';
+import { Calendar, Select } from 'antd';
 import dayjs from 'dayjs';
 
 function CalendarWithContent() {
-  const user = 'dk';
   const date = new Date();
   const actualMonth = date.getMonth() + 1;
   const actualYear = date.getFullYear();
@@ -24,34 +23,51 @@ function CalendarWithContent() {
   const [prevMonthTasks, setPrevMonthTasks] = useState([]);
   const [nextMonthTasks, setNextMonthTasks] = useState([]);
 
+  const defaultTaskUserid = "40";
+  const [taskUserid, setTaskUserid] = useState("");
+
+  useEffect(() => {
+    if (window.location.search.length > 0) {
+      /* get params from url */
+      const params = new URLSearchParams(window.location.search);
+      for (const [key, value] of params.entries()) {
+        if(key == "userid" && value != defaultTaskUserid){
+          setTaskUserid(value);
+        }
+      }
+    } else {
+      setTaskUserid(defaultTaskUserid);
+    }
+  }, []);
+
   useEffect(() => {
     /**
-     * user @type String
+     * taskUserid @type String
      * currentMonth @type Number | integer (converted from String on setMonthTasks)
      * currentYear @type Number | integer (converted from String on setcurrentYear)
      */
 
     /** get tasks for prev month */
-    fetchPost(user, (
+    fetchPost(taskUserid, (
       (currentMonth == 1) ? currentYear - 1 : currentYear),
       ((currentMonth == 1) ? 12 : currentMonth - 1)
     ).then((tasks) => setPrevMonthTasks(tasks));
 
     /** get tasks for current month */
-    fetchPost(user, currentYear, currentMonth).then((tasks) => setMonthTasks(tasks));
+    fetchPost(taskUserid, currentYear, currentMonth).then((tasks) => setMonthTasks(tasks));
 
     /** get tasks for next month */
-    fetchPost(user, (
+    fetchPost(taskUserid, (
       (currentMonth == 12) ? currentYear + 1 : currentYear),
       ((currentMonth == 12) ? 1 : currentMonth + 1)
     ).then((tasks) => setNextMonthTasks(tasks));
 
     // TODO: return () => {stop prev fetch if called another fetch}
-  }, [currentMonth, currentYear]);
+  }, [currentMonth, currentYear, taskUserid]);
 
-  const fetchPost = async (user, year, month) => {
+  const fetchPost = async (taskUserid, year, month) => {
     let collectionDate = year + '-' + month;
-    let collectionName = 'tasks-' + user + '-' + collectionDate;
+    let collectionName = 'tasks-' + taskUserid + '-' + collectionDate;
     try {
       const querySnapshot = await getDocs(collection(db, collectionName));
       /* TODO: add timing type */
@@ -169,11 +185,23 @@ function CalendarWithContent() {
   };
 
   return (
+    <>
+    <div className="taskuserid">
+    <Select
+      value={taskUserid}
+      onChange={(value) => setTaskUserid(value)}
+      options={[
+        { value: '40', label: 'User 40' },
+        { value: '105', label: 'User 105' },
+      ]}
+    />
+    </div>
     <Calendar
       dateCellRender={dateCellRender}
       onPanelChange={onPanelChange}
       validRange={[dayjs('2023-01-01'), dayjs('2024-12-31')]}
     />
+    </>
   );
 }
 export default CalendarWithContent;
